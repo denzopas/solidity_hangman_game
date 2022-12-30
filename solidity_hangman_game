@@ -1,13 +1,53 @@
-//SPDX-License-Identifier:MIT
-pragma solidity ^0.8.0;
-contract Hangman{
-    string public secretWord;
-    uint256 public remainingGuesses;
-    string public guessedLetters;
-    uint256 public score;
+pragma solidity ^0.6.0;
 
-    constructor(string _secretWord, uint256 _remainingGuesses) public{
-        secretWord=_secretWord;
-        remainingGuesses=_remainingGuesses;
+// Hangman game contract
+contract Hangman {
+    // The secret word that the player is trying to guess
+    string public secretWord;
+    
+    // The number of remaining guesses the player has
+    uint256 public remainingGuesses;
+    
+    // The letters that the player has already guessed
+    string public guessedLetters;
+    
+    // The player's current score
+    uint256 public score;
+    
+    // Constructor function to set the secret word and the number of remaining guesses
+    constructor(string _secretWord, uint256 _remainingGuesses) public {
+        secretWord = _secretWord;
+        remainingGuesses = _remainingGuesses;
+    }
+    
+    // Function to make a guess
+    function makeGuess(string _guess) public {
+        // Check if the guess is a valid letter
+        require(bytes(_guess).length == 1, "Invalid guess.");
+        
+        // Check if the player has already guessed this letter
+        require(!bytes(_guessedLetters).contains(_guess), "You have already guessed this letter.");
+        
+        // Add the letter to the list of guessed letters
+        guessedLetters += _guess;
+        
+        // Check if the guess is correct
+        if (!bytes(secretWord).contains(_guess)) {
+            // Incorrect guess, decrease the number of remaining guesses
+            remainingGuesses--;
+        } else {
+            // Correct guess, increase the player's score
+            score++;
+        }
+        
+        // Check if the player has won or lost the game
+        if (score == secretWord.length) {
+            // Player has won, perform the win action (e.g. send a reward to the player)
+            // ...
+        } else if (remainingGuesses == 0) {
+            // Player has lost, perform the loss action (e.g. send a penalty to the player)
+            // ...
+        }
     }
 }
+
