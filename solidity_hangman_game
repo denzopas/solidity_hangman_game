@@ -1,0 +1,13 @@
+//SPDX-License-Identifier:MIT
+pragma solidity ^0.8.0;
+contract Hangman{
+    string public secretWord;
+    uint256 public remainingGuesses;
+    string public guessedLetters;
+    uint256 public score;
+
+    constructor(string _secretWord, uint256 _remainingGuesses) public{
+        secretWord=_secretWord;
+        remainingGuesses=_remainingGuesses;
+    }
+}
